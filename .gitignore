@@ -1,5 +1,6 @@
-.Project Backups
-ms14*
-zip*
-hex*
-slx*
+Solar/.pio
+Solar/.vscode
+*.ms14
+*.zip
+*.hex
+*.slx

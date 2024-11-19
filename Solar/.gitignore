@@ -4,6 +4,7 @@
 .vscode/launch.json
 .vscode/ipch
 .ProjectBackups
-.hex
-.zip
-.slx
+.hex*
+.zip*
+.slx*
+.ms14*

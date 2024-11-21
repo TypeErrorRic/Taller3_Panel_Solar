@@ -7,7 +7,7 @@
 #define PINPWM (unsigned short) 3
 #define PIN_VOLTAJE_BATERIA (unsigned short) A0
 #define PERIODO_MUESTREO 0.05
-#define VALOR_REFERENCIA 9.3
+#define VALOR_REFERENCIA 9.5
 
 volatile extern unsigned short caso;
 

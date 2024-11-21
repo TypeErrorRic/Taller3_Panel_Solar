@@ -25,7 +25,7 @@ void setupCapture()
   TIMSK1 |= (1 << OCIE1A);
   sei(); // Activar interrupciones
 
-  //Frecuencia: 4khz
+  //Frecuencia: 32khz
   TCCR2B &= ~((1 << CS22) | (1 << CS21) | (1 << CS20));
   TCCR2B |= (1 << CS20);
   

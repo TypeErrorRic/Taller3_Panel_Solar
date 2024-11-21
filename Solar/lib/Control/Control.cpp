@@ -54,7 +54,7 @@ unsigned short Control::control(unsigned short valorCapturado)
     // Obtener la acción derivativa
     float derivadaAction = 0;
     if(((error > -20 && error < 20) && ((error < -10 || error > 10)))
-        && (errorP > -25 && errorP < 25) && PWMvalor > 15)
+        && (errorP > -25 && errorP < 25) && (PWMvalor > 15 && PWMvalor < 230))
     {
         derivadaAction = AccionDerivativa(error);
         integral -= derivadaAction;

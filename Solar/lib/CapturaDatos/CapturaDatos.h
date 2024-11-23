@@ -6,8 +6,8 @@
 //Configuración de Captura de voltaje de Batería y Control:
 #define PINPWM (unsigned short) 3
 #define PIN_VOLTAJE_BATERIA (unsigned short) A0
-#define PERIODO_MUESTREO 0.05
-#define VALOR_REFERENCIA 9.5
+#define PERIODO_MUESTREO 0.05 // 50 ms.
+#define VALOR_REFERENCIA 9.4
 
 volatile extern unsigned short caso;
 

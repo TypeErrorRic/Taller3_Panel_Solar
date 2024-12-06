@@ -7,6 +7,8 @@
 volatile extern int error;
 extern unsigned short PWMvalor;
 
+#define ValorPWMMax 210
+
 class Control
 {
 private:
@@ -14,8 +16,8 @@ private:
     float Ki;
     float Kd;
     float dt;
-    float integral;
     float derivada;
+    volatile float integral;
     int errorP;
     float ref;
 public:
@@ -24,6 +26,7 @@ public:
     float AccionProporcional(int);
     float AccionDerivativa(int);
     unsigned short control(unsigned short);
+    void setIntegral(float valor);
 };
 
 #endif

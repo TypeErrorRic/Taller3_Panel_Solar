@@ -5,7 +5,10 @@ unsigned short PWMvalor = 0;
 
 Control::Control(float Kp, float Ki, float Kd, float dt, float ref) : Kp(Kp), Ki(Ki), Kd(Kd), dt(dt)
 {
-    Control::ref = static_cast<int>((ref * 255) / VoltajeSalida);
+    this->ref = static_cast<int>((ref * 255) / VoltajeSalida);
+    this->derivada = 0;
+    this->errorP = 0;
+    this->integral = 0;
 }
 
 static int constrain(int value, int min, int max)
@@ -24,22 +27,22 @@ static int constrain(int value, int min, int max)
 float Control::AccionIntegral(int error)
 {
     // Acumular el error
-    integral += error * dt;
+    this->integral += error * dt;
     // Limitar la parte integral para evitar windup
-    integral = constrain(integral, -230.0 / Ki, 230.0 / Ki);
-    return Ki * integral; // Devuelve el término integral calculado
+    this->integral = constrain(this->integral, -ValorPWMMax / this->Ki, ValorPWMMax / this->Ki);
+    return this->Ki * this->integral; // Devuelve el término integral calculado
 }
 
 float Control::AccionProporcional(int error)
 {
-    return Kp * error;
+    return this->Kp * error;
 }
 
 float Control::AccionDerivativa(int error)
 {
-    derivada = (error - errorP)/dt;
-    derivada = constrain(derivada, -230.0, 230.0);
-    return derivada * Kd;
+    this->derivada = (error - this->errorP)/this->dt;
+    this->derivada = constrain(this->derivada, -ValorPWMMax, ValorPWMMax);
+    return this->derivada * this->Kd;
 }
 
 unsigned short Control::control(unsigned short valorCapturado)
@@ -54,17 +57,22 @@ unsigned short Control::control(unsigned short valorCapturado)
     // Obtener la acción derivativa
     float derivadaAction = 0;
     if(((error > -22 && error < 22) && ((error < -10 || error > 10)))
-        && (errorP > -25 && errorP < 25) && (PWMvalor > 15 && PWMvalor < 230))
+        && (errorP > -25 && errorP < 25) && (PWMvalor > 15 && PWMvalor < ValorPWMMax))
     {
         derivadaAction = AccionDerivativa(error);
         if (error < 0)
-            integral -= derivadaAction;
+            this->integral -= derivadaAction;
         else
-            integral += derivadaAction;
+            this->integral += derivadaAction;
     }
     //Actualizar error anterior:
     errorP = error;
     // Salida total
-    PWMvalor = constrain(proportional + integralAction + derivadaAction, 0, 230);
+    PWMvalor = constrain(proportional + integralAction + derivadaAction, 0, ValorPWMMax);
     return PWMvalor;
+}
+
+void Control::setIntegral(float valor)
+{
+    this->integral = valor;
 }

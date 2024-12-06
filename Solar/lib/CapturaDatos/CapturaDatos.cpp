@@ -47,6 +47,7 @@ ISR(TIMER1_COMPA_vect)
   default:
     analogWrite(PINPWM,0);
     error = 0;
+    control.setIntegral(0);
     break;
   }    
 }

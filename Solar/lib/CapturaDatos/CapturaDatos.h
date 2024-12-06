@@ -7,7 +7,7 @@
 #define PINPWM (unsigned short) 3
 #define PIN_VOLTAJE_BATERIA (unsigned short) A0
 #define PERIODO_MUESTREO 0.05 // 50 ms.
-#define VALOR_REFERENCIA 9.4
+#define VALOR_REFERENCIA 12 //voltios de referencia. Se presupuesta una caida de 1 voltio
 
 volatile extern unsigned short caso;
 
@@ -18,7 +18,7 @@ volatile extern unsigned short caso;
 
 //Configuración del Sensor de Voltaje:
 #define sensor2Pin A1
-#define voltajeUmbral 2
+#define voltajeUmbral 3
 
 void setupCapture();
 float capturaCorrientePanel();
